@@ -5,34 +5,41 @@ pipeline {
 
         stage('Checkout') {
             steps {
-        git branch: 'main', url: 'https://github.com/OsamaMMedht/CI-CD.git'
+                git branch: 'main', url: 'https://github.com/OsamaMMedht/CI-CD.git'
             }
         }
 
         stage('Verify Files') {
             steps {
-                bat 'dir'
+                dir('Simple-CI-CD') {
+                    bat 'dir'
+                }
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                bat 'npm install'
+                dir('Simple-CI-CD') {
+                    bat 'npm install'
+                }
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t node-app .'
+                dir('Simple-CI-CD') {
+                    bat 'docker build -t node-app .'
+                }
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                bat 'docker run -d -p 3000:3000 --name my-node-app node-app'
+                dir('Simple-CI-CD') {
+                    bat 'docker run -d -p 80:80 --name my-node-app node-app'
+                }
             }
         }
-
     }
 
     post {

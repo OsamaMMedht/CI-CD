@@ -11,17 +11,43 @@ pipeline {
 
         stage('Verify Files') {
             steps {
-                sh 'ls -la'
+                dir('Simple-CI-CD') {
+                    sh 'ls -la'
+                }
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                dir('Simple-CI-CD') {
+                    sh 'npm install'
+                }
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t node-app .'
+                dir('Simple-CI-CD') {
+                    sh 'docker build -t node-app .'
+                }
             }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                dir('Simple-CI-CD') {
+                    sh 'docker run -d -p 80:80 --name my-node-app node-app'
+                }
+            }
+        }
+    }
+
+    post {
+        failure {
+            echo 'Build failed.'
+        }
+        success {
+            echo 'Build and run succeeded.'
+        }
+    }
+}
