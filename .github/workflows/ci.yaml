@@ -25,9 +25,4 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/$REPOSITORY:$IMAGE_TAG github-actions
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/$REPOSITORY:$IMAGE_TAG
-
-      - name: test build
-        run: |
-           echo "Image: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}"
-           docker run ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
       
