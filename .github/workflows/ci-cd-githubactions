@@ -3,7 +3,7 @@ name: CI-CD using github-actions
 on:
   push:
     paths:
-      - 'CI-CD-githubactions/**'
+      - CI-CD-githubactions/**
 
 jobs:
   deploy:
